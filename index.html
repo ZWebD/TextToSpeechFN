@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Copy</title>
+</head>
+<body>
+ <div>
+     <form>
+        <textarea name="in_text" id="in_text" cols="30" rows="10"></textarea>
+        <br>      
+     </form>
+     <button onclick="copy()">Submit</button>
+     <br>
+     <form >
+        <textarea name="out_text" id="out_text" readonly cols="30" rows="10"></textarea>
+     </form>
+ </div>
+<script>
+    function copy(){
+    const txt = document.getElementById("in_text");
+    console.log(txt);
+    const txt_out = '"' + txt.value.replace(/(\r\n|\n|\r)/gm,"\\n") + '"'; 
+    document.getElementById("out_text").innerHTML = txt_out}    
+</script>
+</body>
+</html>
