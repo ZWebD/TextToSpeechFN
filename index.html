@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="url.js"></script>
+    <script src="JS/url.js"></script>
     <title>Text Copy</title>
 </head>
 <body>
  <div>
      <form>
         <textarea name="in_text" id="in_text" cols="30" rows="10"></textarea>
+        <select name="voiceProfile" id="vp">
+
+        </select>
         <br>      
      </form>
      <button onclick="copy()">Submit</button>
@@ -19,41 +22,50 @@
         <textarea name="out_text" id="out_text" readonly cols="30" rows="10"></textarea>
      </form>
      <p id="p"></p>
-     <p id="arr"></p>
  </div>
  <!-- script -->
 <script>
         
         !async function() {
-            var data = await fetch(url+"/profiles")
+            var data = await fetch(server+"/profiles")
             .then(data => data.json())
             .then(data => {return data.profiles;})
             .catch(error => {
-        console.error(error);
+            console.error(error);
         });
-        //console.log(data);
-        document.getElementById("arr").innerHTML = data;
+               var sel = document.getElementById("vp");
+            data.forEach(element => {                
+                var opt = document.createElement("option");
+                opt.innerHTML = element;
+                opt.value = element;
+                sel.appendChild(opt);
+            });
+
         }();   
+        
     function copy(){
   
     const txt = document.getElementById("in_text");
     document.getElementById("p").innerHTML = "ok";
     document.getElementById("out_text").innerHTML = JSON.stringify(txt.value);
     console.log(JSON.stringify(txt.value));
+    let select = document.getElementById("vp").value;
+            console.log(select);     
+
        const data = {
             textToConvert: txt.value,
-            profile: "gb"
+            profile: select
            };
        const option ={
            method:"POST",
            headers: {"content-Type": "application/json"},
            body: JSON.stringify(data)
          };
-         console.log(option);
-        const url = url+"/convert";
-        /*fetch(url, option).then(response =>{
+         console.log(data,option);
+        const url = server+"/convert";
+        fetch(url, option).then(response =>{
             console.log(response);
-        });*/
+        });
 }
 </script>
 </body>
