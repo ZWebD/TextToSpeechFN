@@ -10,10 +10,10 @@
 <body>
  <div>
      <form>
-        <textarea name="in_text" id="in_text" cols="30" rows="10"></textarea>
+        <textarea name="in_text" id="in_text" cols="30" rows="10" oninput="count(this)"></textarea>
         <select name="voiceProfile" id="vp">
-
         </select>
+        <p id="char"></p>
         <br>      
      </form>
      <button onclick="copy()">Submit</button>
@@ -42,6 +42,16 @@
             });
 
         }();   
+        // Input text area change and char count
+        let maxLength=4750;
+        document.getElementById("in_text").setAttribute("maxlength",maxLength);
+        document.getElementById("char").innerHTML= (maxLength-maxLength)+"/"+maxLength;
+    function count(obj) {
+        let strLength= obj.value.length;
+        let charRemain=(maxLength-strLength);
+        document.getElementById("char").innerHTML= strLength+"/"+maxLength;
+    }
+
         
     function copy(){
   
