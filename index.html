@@ -22,20 +22,21 @@
         <textarea name="out_text" id="out_text" readonly cols="30" rows="10"></textarea>
      </form>
      <p id="p"></p>
+     <p id="error"></p>
  </div>
  <!-- script -->
 <script>
-        
+        // Voice profile pick
         !async function() {
-            var data = await fetch(server+"/profiles")
+            let data = await fetch(server+"/profiles")
             .then(data => data.json())
             .then(data => {return data.profiles;})
             .catch(error => {
             console.error(error);
         });
-               var sel = document.getElementById("vp");
+               let sel = document.getElementById("vp");
             data.forEach(element => {                
-                var opt = document.createElement("option");
+                let opt = document.createElement("option");
                 opt.innerHTML = element;
                 opt.value = element;
                 sel.appendChild(opt);
@@ -59,7 +60,7 @@
     document.getElementById("p").innerHTML = "ok";
     document.getElementById("out_text").innerHTML = JSON.stringify(txt.value);
     console.log(JSON.stringify(txt.value));
-    let select = document.getElementById("vp").value;
+    const select = document.getElementById("vp").value;
             console.log(select);     
 
        const data = {
@@ -76,7 +77,13 @@
         fetch(url, option).then(response =>{
             console.log(response);
         });
-}
+    }
+    // Displaying the received information from the server  
+    if (error) {
+        document.getElementById("error").innerHTML = error;
+    } else {
+        //audio player place
+    }
 </script>
 </body>
 </html>
